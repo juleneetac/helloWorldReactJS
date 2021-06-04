@@ -42,6 +42,7 @@ pipeline {
                         PWD = sh ( script: 'pwd', returnStdout: true).trim()
                         sh "npm install"
                         sh "npm test"  
+                        sh "q"
                     }
 
                 }
