@@ -1,25 +1,12 @@
-#FROM docker-registry.default.svc:5000/localdemo/nodejs-14:latest
-#FROM 172.30.1.1:5000/localdemo/hello:latest
-FROM registry.access.redhat.com/ubi8/nodejs-14:latest
-#Add application sources to a directory that the assemble script expects them
-#and set permissions so that the container runs without root access
-USER 0
-ADD package.json /tmp/src/package.json
-ADD src/index.js /tmp/src/src/index.js
-ADD public/index.html /tmp/src/public/index.html
-
-
-RUN chown -R 1001:0 /tmp/src
-RUN chown -R 1001:0 /tmp/src/public
-RUN chown -R 1001:0 /tmp/src/src
-USER 1001
-
-#
-# RUN ls /usr/libexec
-# RUN ls /usr/libexec/s2i
-
-# Install the dependencies
-RUN /usr/libexec/s2i/assemble
-EXPOSE 8080
-# Set the default command for the resulting image
-CMD /usr/libexec/s2i/run
+# Stage 0, "build-stage", based on Node.js, to build and compile the frontend
+FROM tiangolo/node-frontend:10 as build-stage
+WORKDIR /app
+COPY package*.json /app/
+RUN npm install
+COPY ./ /app/
+RUN npm run build
+# Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
+FROM nginx:1.15
+COPY --from=build-stage /app/build/ /usr/share/nginx/html
+# Copy the default nginx.conf provided by tiangolo/node-frontend
+COPY --from=build-stage /nginx.conf /etc/nginx/conf.d/default.conf
