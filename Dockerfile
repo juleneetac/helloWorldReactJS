@@ -5,7 +5,7 @@ FROM registry.access.redhat.com/ubi8/nodejs-14:latest
 #and set permissions so that the container runs without root access
 USER 0
 ADD package.json /tmp/src/package.json
-ADD src/index.js /tmp/src/index.js
+ADD index.js /tmp/src/index.js
 
 ADD public/index.html /tmp/src/public/index.html
 
