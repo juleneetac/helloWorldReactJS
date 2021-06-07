@@ -5,13 +5,14 @@ FROM registry.access.redhat.com/ubi8/nodejs-14:latest
 #and set permissions so that the container runs without root access
 USER 0
 ADD package.json /tmp/src/package.json
-ADD index.js /tmp/src/index.js
+ADD src/index.js /tmp/src/src/index.js
 
 ADD public/index.html /tmp/src/public/index.html
 
 
 RUN chown -R 1001:0 /tmp/src
 RUN chown -R 1001:0 /tmp/src/public
+RUN chown -R 1001:0 /tmp/src/src
 USER 1001
 
 #
