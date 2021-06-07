@@ -1,7 +1,8 @@
 # Stage 0, "build-stage", based on Node.js, to build and compile the frontend
 FROM tiangolo/node-frontend:10 as build-stage
 WORKDIR /app
-COPY package*.json /app/
+COPY package-lock.json /app/
+COPY package.json /app/
 RUN ls /app
 #añadido por mi
 #RUN chmod 777 /app/  
