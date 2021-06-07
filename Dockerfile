@@ -6,7 +6,6 @@ FROM registry.access.redhat.com/ubi8/nodejs-14:latest
 USER 0
 ADD package.json /tmp/src/package.json
 ADD src/index.js /tmp/src/src/index.js
-
 ADD public/index.html /tmp/src/public/index.html
 
 
