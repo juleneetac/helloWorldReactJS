@@ -11,9 +11,7 @@
 FROM tiangolo/node-frontend:10 as build-stage
 WORKDIR /app
 COPY package*.json /app/
-ADD package.json /tmp/build/inputs/package.json
 RUN ls /app
-RUN ls 
 #añadido por mi
 #RUN chmod 777 /app/  
 
