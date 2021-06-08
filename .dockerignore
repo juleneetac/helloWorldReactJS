@@ -1,0 +1,2 @@
+#add your file which you want to ignore while docker processing
+package-lock.json
