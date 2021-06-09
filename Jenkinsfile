@@ -174,7 +174,7 @@ pipeline {
 
                 sh "rm -rf oc-build && mkdir oc-build && mkdir oc-build/public" //&& mkdir oc-build/src"
                 sh "cp Dockerfile oc-build/Dockerfile"
-                //sh "cp package.json oc-build/package.json"
+                sh "cp package.json oc-build/package.json"
 
                 sh "mv public oc-build/public/"
                 sh "ls oc-build/public/"
