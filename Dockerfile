@@ -1,5 +1,5 @@
 # Stage 0, "build-stage", based on Node.js, to build and compile the frontend
-FROM node:12-alpine3.12 AS build
+FROM tiangolo/node-frontend:10 AS build
 WORKDIR /app
 COPY package*.json ./
 RUN ls /app
@@ -8,7 +8,7 @@ COPY . .
 RUN npm run build
 
 # Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
-FROM nginx:1.19.0-alpine
+FROM nginx:1.15
 COPY --from=build-stage /app/build/ /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
