@@ -17,6 +17,7 @@ RUN ls /app
 
 RUN npm install
 COPY ./ /app/
+RUN ls /app
 RUN npm run build
 
 
