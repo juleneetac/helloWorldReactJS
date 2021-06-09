@@ -1,15 +1,16 @@
-FROM nginx:1.17.3
+# Stage 0, "build-stage", based on Node.js, to build and compile the frontend
+FROM node:12-alpine3.12 AS build
+WORKDIR /app
+COPY package*.json ./
+RUN ls /app
+RUN npm install
+COPY . .
+RUN npm run build
 
-
-RUN rm /etc/nginx/conf.d/*
-RUN mkdir /tmp/nginx
-RUN mkdir -p /var/log/app
-RUN chmod -R 777 /tmp/nginx
-
-COPY public/react-nginx-docker/. /opt/app
-COPY nginx.conf /etc/nginx/nginx.conf
-USER root
-RUN chgrp -R root /var/cache/nginx /var/run /var/log/nginx && \
-    chmod -R 770 /var/cache/nginx /var/run /var/log/nginx /var/log
-RUN chmod 666 /etc/nginx/nginx.conf
-RUN apt-get update && apt-get install -y vim
+# Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
+FROM nginx:1.19.0-alpine
+COPY --from=build-stage /app/build/ /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+# Copy the default nginx.conf provided by tiangolo/node-frontend
+#COPY --from=build-stage /nginx.conf /etc/nginx/conf.d/default.conf
