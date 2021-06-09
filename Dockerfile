@@ -14,7 +14,7 @@ RUN chgrp -R root /var/cache/nginx /var/run /var/log/nginx && \
     chmod -R 770 /var/cache/nginx /var/run /var/log/nginx /var/log
 RUN chmod 666 /etc/nginx/nginx.conf
 COPY --from=build-stage /app/build/ /usr/share/nginx/html
-EXPOSE 80
-CMD ["sudo", "nginx", "-g", "daemon off;"]
+EXPOSE 8400
+CMD ["nginx", "-g", "daemon off;"]
 # Copy the default nginx.conf provided by tiangolo/node-frontend
 #COPY --from=build-stage /nginx.conf /etc/nginx/conf.d/default.conf
