@@ -1,10 +1,10 @@
-version: '3'
-
+version: '2.1'
 
 services:
-  react:
-    build:
-      context: .
+  react-nginx-docker:
+    image: react-nginx-docker
+    build: .
+    environment:
+      NODE_ENV: production
     ports:
-      - 4680:3000
-    command: npm start
+      - 80:80
