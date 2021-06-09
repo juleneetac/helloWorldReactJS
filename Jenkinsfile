@@ -176,8 +176,8 @@ pipeline {
                 sh "cp Dockerfile oc-build/Dockerfile"
                 sh "cp nginx.conf oc-build/nginx.conf"
 
-                sh "mv public oc-build/public/"
-                sh "ls oc-build/public/react-nginx-docker"
+                sh "mv dist oc-build/dist/"
+                sh "ls oc-build/dist/react-nginx-docker"
 
                 script {
                     openshift.withCluster() {
