@@ -172,12 +172,12 @@ pipeline {
             steps {
                 echo "==== Build Image Stage ===="
 
-                sh "rm -rf oc-build && mkdir oc-build"
+                sh "rm -rf oc-build && mkdir oc-build && mkdir oc-build/public"
                 sh "cp Dockerfile oc-build/Dockerfile"
                 sh "cp nginx.conf oc-build/nginx.conf"
 
-                sh "mv dist oc-build/dist/"
-                sh "ls oc-build/dist/react-nginx-docker"
+                sh "mv public oc-build/public"
+                //sh "ls oc-build/dist/react-nginx-docker"
 
                 script {
                     openshift.withCluster() {

@@ -1,5 +1,5 @@
 {
-  "name": "hello",
+  "name": "react-nginx-docker",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
