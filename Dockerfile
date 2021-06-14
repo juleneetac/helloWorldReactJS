@@ -8,19 +8,19 @@ COPY . .
 RUN npm run build
 
 # Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
-FROM nginx:1.15
-USER root
-RUN chgrp -R root /var/cache/nginx /var/run /var/log/nginx && \
-    chmod -R 770 /var/cache/nginx /var/run /var/log/nginx /var/log
-RUN chmod 666 /etc/nginx/nginx.conf
-COPY --from=build-stage /app/build/ /usr/share/nginx/html
-EXPOSE 8400
-CMD ["nginx", "-g", "daemon off;"]
+# FROM nginx:1.15
+# USER root
+# RUN chgrp -R root /var/cache/nginx /var/run /var/log/nginx && \
+#     chmod -R 770 /var/cache/nginx /var/run /var/log/nginx /var/log
+# RUN chmod 666 /etc/nginx/nginx.conf
+# COPY --from=build-stage /app/build/ /usr/share/nginx/html
+# EXPOSE 8400
+# CMD ["nginx", "-g", "daemon off;"]
 # Copy the default nginx.conf provided by tiangolo/node-frontend
 #COPY --from=build-stage /nginx.conf /etc/nginx/conf.d/default.conf
 
-# FROM nginx:1.15.2-alpine
-# COPY ./build /var/www
-# COPY nginx.conf /etc/nginx/nginx.conf
-# EXPOSE 80
-# ENTRYPOINT ["nginx","-g","daemon off;"]
+FROM nginx:1.15.2-alpine
+COPY ./build /var/www
+COPY nginx.conf /etc/nginx/nginx.conf
+EXPOSE 80
+ENTRYPOINT ["nginx","-g","daemon off;"]
