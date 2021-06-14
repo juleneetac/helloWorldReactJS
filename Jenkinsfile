@@ -172,12 +172,12 @@ pipeline {
             steps {
                 echo "==== Build Image Stage ===="
 
-                sh "rm -rf oc-build && mkdir oc-build" // && mkdir oc-build/public && mkdir oc-build/src"
+                sh "rm -rf oc-build && mkdir oc-build && mkdir oc-build/public && mkdir oc-build/src"
                 sh "cp Dockerfile oc-build/Dockerfile"
                 sh "cp nginx.conf oc-build/nginx.conf"  //añadido nuevo
-                // sh "cp package.json oc-build/package.json"
-                // sh "cp public/index.html oc-build/public/index.html"
-                // sh "cp src/index.js oc-build/src/index.js"
+                sh "cp package.json oc-build/package.json"
+                sh "cp public/index.html oc-build/public/index.html"
+                sh "cp src/index.js oc-build/src/index.js"
                 
 
                 //sh "mv public oc-build/public"
