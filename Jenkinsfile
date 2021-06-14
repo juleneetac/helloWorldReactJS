@@ -26,7 +26,7 @@ pipeline {
                         sh "ls -ltr"
                         sh "npm install"
                         sh "npm run-script build"
-                        sh "ls  /build"
+                        sh "ls build"
 
                     }
                     sh "npm --version"
