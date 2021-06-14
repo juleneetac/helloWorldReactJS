@@ -35,7 +35,8 @@ RUN mkdir /tmp/nginx
 RUN mkdir -p /var/log/app
 RUN chmod -R 777 /tmp/nginx
 
-COPY build/react-nginx-docker/. /opt/app
+#COPY build/react-nginx-docker/. /opt/app
+COPY build/. /opt/app
 COPY nginx.conf /etc/nginx/nginx.conf
 USER root
 RUN chgrp -R root /var/cache/nginx /var/run /var/log/nginx && \
