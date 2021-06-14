@@ -182,7 +182,7 @@ pipeline {
                 
 
                 sh "mv build oc-build/build"
-                sh "ls oc-build/dist/react-nginx-docker"
+                sh "ls oc-build/build/react-nginx-docker"
 
                 script {
                     openshift.withCluster() {
