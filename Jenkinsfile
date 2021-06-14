@@ -25,7 +25,7 @@ pipeline {
                         sh "echo ${PWD}"
                         sh "ls -ltr"
                         sh "npm install"
-                        sh "npm build"
+                        sh "npm run-script build"
                         sh "ls  build/react-nginx-docker"
 
                     }
