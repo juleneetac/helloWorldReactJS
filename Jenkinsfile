@@ -50,16 +50,16 @@ pipeline {
         //     }
         // }
 
-        // stage('Analyze Code ') {
-        //     steps {
-        //     container('seapdl-sonar-scanner'){
-        //             echo "==== Analyze App Stage ===="
-        //             script {
-        //                 sh "sonar-scanner -Dsonar.host.url=http://sonarqube-nexson.192.168.99.110.nip.io -Dsonar.login=${SONAR_TOKEN} -Dsonar.projectName=${SONAR_PROJECT} -Dsonar.projectKey=${SONAR_PROJECT}"
-        //             }
-        //         }
-        //     }
-        // }
+        stage('Analyze Code ') {
+            steps {
+            container('seapdl-sonar-scanner'){
+                    echo "==== Analyze App Stage ===="
+                    script {
+                        sh "sonar-scanner -Dsonar.host.url=http://sonarqube-nexson.192.168.99.110.nip.io -Dsonar.login=${SONAR_TOKEN} -Dsonar.projectName=${SONAR_PROJECT} -Dsonar.projectKey=${SONAR_PROJECT}"
+                    }
+                }
+            }
+        }
 
 
         stage('Validate Dockerfile') {
@@ -103,38 +103,38 @@ pipeline {
         }
 
 
-        // stage('Deploy zip to Nexus') {
-        //     steps {
-        //         script {
-        //             openshift.withCluster() {
-        //                 openshift.withProject("${PROJECT}") {
-        //                     def template = openshift.apply(readFile('app.yaml'))
-        //                     def model = openshift.process(template.name(), "-p", "PROJECT=${PROJECT}", "APP=${APP}")
+        stage('Deploy zip to Nexus') {
+            steps {
+                script {
+                    openshift.withCluster() {
+                        openshift.withProject("${PROJECT}") {
+                            def template = openshift.apply(readFile('app.yaml'))
+                            def model = openshift.process(template.name(), "-p", "PROJECT=${PROJECT}", "APP=${APP}")
 
-        //                 }
-        //             }
-        //         }
+                        }
+                    }
+                }
 
-        //         container('python') {
-        //             echo "==== Deploy Nexus Artifact Stage ===="
+                container('python') {
+                    echo "==== Deploy Nexus Artifact Stage ===="
 
-        //             script {
-        //                 VERSION = sh ( script: "cat package.json   | grep version   | head -1  | awk -F: '{ print \$2 }' | sed 's/[\",]//g' ", returnStdout: true).trim()
-        //                 echo VERSION
-        //                 echo env.VERSION
-        //                 def projectVar = env.PROJECT
-        //                 echo projectVar
-        //                 repoName = projectVar+"-RELEASES"
-        //                 echo repoName
-        //              }
-        //             sh "echo ${VERSION}"
-        //             sh "echo ${repoName}"
+                    script {
+                        VERSION = sh ( script: "cat package.json   | grep version   | head -1  | awk -F: '{ print \$2 }' | sed 's/[\",]//g' ", returnStdout: true).trim()
+                        echo VERSION
+                        echo env.VERSION
+                        def projectVar = env.PROJECT
+                        echo projectVar
+                        repoName = projectVar+"-RELEASES"
+                        echo repoName
+                     }
+                    sh "echo ${VERSION}"
+                    sh "echo ${repoName}"
 
-        //             sh "zip -r '$APP'-'$VERSION'.zip  ."
-        //             sh "curl --header 'Content-Type: application/x-7z-compressed' --upload-file '$APP'-'$VERSION'.zip -u '$NEXUS_USERNAME':'$NEXUS_PASSWORD' -v 'http://nexus-nexson.192.168.99.110.nip.io/repository/$repoName/'"
-        //         }
-        //     }
-        // }
+                    sh "zip -r '$APP'-'$VERSION'.zip  ."
+                    sh "curl --header 'Content-Type: application/x-7z-compressed' --upload-file '$APP'-'$VERSION'.zip -u '$NEXUS_USERNAME':'$NEXUS_PASSWORD' -v 'http://nexus-nexson.192.168.99.110.nip.io/repository/$repoName/'"
+                }
+            }
+        }
 
 
         stage('Create image builder') {
@@ -175,9 +175,6 @@ pipeline {
 
                 sh "rm -rf oc-build && mkdir oc-build" // && mkdir oc-build/public && mkdir oc-build/src"
                 sh "cp Dockerfile oc-build/Dockerfile"
-                //sh "cp package.json oc-build/package.json"
-                //sh "cp public/index.html oc-build/public/index.html"
-                //sh "cp src/index.js oc-build/src/index.js"
                 sh "cp nginx.conf oc-build/nginx.conf"  //añadido nuevo
                 
 
