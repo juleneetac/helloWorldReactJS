@@ -50,7 +50,7 @@ objects:
               livenessProbe:
                 failureThreshold: 3
                 httpGet:
-                  path: /
+                  path: /nginx-health
                   port: 8080
                   scheme: HTTP
                 initialDelaySeconds: 30
@@ -60,7 +60,7 @@ objects:
               readinessProbe:
                 failureThreshold: 3
                 httpGet:
-                  path: /
+                  path: /nginx-health
                   port: 8080
                 scheme: HTTP
                 initialDelaySeconds: 30
