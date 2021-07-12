@@ -35,20 +35,21 @@ pipeline {
             }
         }
 
-        // stage('Lint & Test app') {
-        //     steps {
-        //         container('seapdl-nodejs14'){
-        //             echo "==== Test App Stage ===="
-        //             script {
-        //                 PWD = sh ( script: 'pwd', returnStdout: true).trim()
-        //                 sh "npm install"
-        //                 sh "npm test"  
-        //                 sh "q"
-        //             }
+        stage('Lint & Test app') {
+            steps {
+                container('seapdl-nodejs14'){
+                    echo "==== Test App Stage ===="
+                    script {
+                        PWD = sh ( script: 'pwd', returnStdout: true).trim()
+                        sh "npm install"
+                        sh "npm test"  
+                        sh "w"
+                        sh "q"
+                    }
 
-        //         }
-        //     }
-        // }
+                }
+            }
+        }
 
         stage('Analyze Code ') {
             steps {
@@ -172,15 +173,12 @@ pipeline {
         stage('Build image') {
             steps {
                 echo "==== Build Image Stage ===="
-
                 sh "rm -rf oc-build && mkdir oc-build" // && mkdir oc-build/public && mkdir oc-build/src"
                 sh "cp Dockerfile oc-build/Dockerfile"
                 sh "cp nginx.conf oc-build/nginx.conf"  //añadido nuevo
                 
-
                 sh "mv build oc-build/build"
                 sh "ls oc-build/build"
-
                 script {
                     openshift.withCluster() {
                         openshift.withProject("${PROJECT}") {
