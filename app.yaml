@@ -8,12 +8,12 @@ metadata:
     iconClass: icon-tomcat
   name: pdl-app
 parameters:
-  - displayName: PROJECT
+  - displayName: PROJECT   #localdemo (debe ser el nombre del proyecto de openshit)
     description: "Openshift Project"
     value: sdc
     name: PROJECT
     required: true
-  - displayName: APP
+  - displayName: APP       #react o hello o el nombre que le queramos dar
     description: "Openshift APP Name"
     value: app
     name: APP
