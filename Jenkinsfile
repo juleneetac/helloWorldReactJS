@@ -35,22 +35,22 @@ pipeline {
             }
         }
 
-        stage('Lint & Test app') {
-            steps {
-                container('seapdl-nodejs14'){
-                    echo "==== Test App Stage ===="
-                    script {
-                        PWD = sh ( script: 'pwd', returnStdout: true).trim()
-                        //sh "npm install"
-                        sh "npm test" 
-                        sh "echo -ne '\n' | a"   //enter y luego el comando a (que es pasar todos los tests)
-                        sh "w"
-                        sh "q"
-                    }
+        // stage('Lint & Test app') {
+        //     steps {
+        //         container('seapdl-nodejs14'){
+        //             echo "==== Test App Stage ===="
+        //             script {
+        //                 PWD = sh ( script: 'pwd', returnStdout: true).trim()
+        //                 //sh "npm install"
+        //                 sh "npm test" 
+        //                 sh "echo -ne '\n' | a"   //enter y luego el comando a (que es pasar todos los tests)
+        //                 sh "w"
+        //                 sh "q"
+        //             }
 
-                }
-            }
-        }
+        //         }
+        //     }
+        // }
 
         stage('Analyze Code ') {
             steps {
