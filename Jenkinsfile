@@ -41,8 +41,9 @@ pipeline {
                     echo "==== Test App Stage ===="
                     script {
                         PWD = sh ( script: 'pwd', returnStdout: true).trim()
-                        sh "npm install"
-                        sh "npm test"  
+                        //sh "npm install"
+                        sh "npm test" 
+                        sh "a" 
                         sh "w"
                         sh "q"
                     }
